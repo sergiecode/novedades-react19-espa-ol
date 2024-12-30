@@ -1,7 +1,6 @@
+# React v19
 
-### React v19
-
-**5 de diciembre de 2024 por el equipo de React**
+**Extraído del blog publicado el 5 de diciembre de 2024 por el equipo de React**
 
 #### Nota
 
