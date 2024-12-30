@@ -11,7 +11,7 @@ Un caso común en aplicaciones React es realizar una mutación de datos y luego 
 
 Por ejemplo, así se manejaban los estados pendientes y de error con `useState`:
 
-```
+```jsx
 // Antes de Actions
 function UpdateName() {
   const [name, setName] = useState("");
@@ -45,7 +45,7 @@ En React 19, se añade soporte para usar funciones asíncronas en transiciones, 
 
 Por ejemplo, puedes usar `useTransition` para manejar automáticamente el estado pendiente:
 
-```
+```jsx
 // Usando estado pendiente con Actions
 function UpdateName() {
   const [name, setName] = useState("");
@@ -94,7 +94,7 @@ Sobre esta base, React 19 introduce `useOptimistic` para gestionar actualizacion
 
 El ejemplo anterior se puede simplificar aún más con estas nuevas características:
 
-```
+```jsx
 // Usando <form> Actions y useActionState
 function ChangeName({ name, setName }) {
   const [error, submitAction, isPending] = useActionState(
@@ -125,7 +125,7 @@ function ChangeName({ name, setName }) {
 
 Para facilitar los casos comunes con **Actions**, se introduce el nuevo hook `useActionState`:
 
-```
+```jsx
 const [error, submitAction, isPending] = useActionState(
   async (previousState, newName) => {
     const error = await updateName(newName);
@@ -153,7 +153,7 @@ const [error, submitAction, isPending] = useActionState(
 
 Las "Actions" (acciones) están integradas con las nuevas características de `<form>` en React 19 para `react-dom`. Ahora es posible pasar funciones a las propiedades `action` y `formAction` de los elementos `<form>`, `<input>` y `<button>`, para enviar formularios automáticamente con acciones:
 
-```
+```jsx
 <form action={funcionDeAccion}>
 ```
 
@@ -167,7 +167,7 @@ Cuando una acción en un `<form>` se ejecuta con éxito, React restablecerá aut
 
 En sistemas de diseño, es común crear componentes que necesitan información sobre el `<form>` en el que están, sin necesidad de pasar props hacia abajo. Esto puede lograrse usando Context, pero para simplificar el caso común, React 19 incluye el nuevo hook `useFormStatus`:
 
-```
+```jsx
 import { useFormStatus } from 'react-dom';
 
 function BotonDeDiseño() {
@@ -186,7 +186,7 @@ function BotonDeDiseño() {
 
 Otro patrón común en la interfaz de usuario al realizar mutaciones de datos es mostrar el estado final de forma optimista mientras la solicitud asíncrona se procesa. Con React 19, ahora puedes usar el nuevo hook `useOptimistic` para manejar esto fácilmente:
 
-```
+```jsx
 function CambiarNombre({ nombreActual, onActualizarNombre }) {
   const [nombreOptimista, setNombreOptimista] = useOptimistic(nombreActual);
 
@@ -227,7 +227,7 @@ En React 19, se introduce una nueva API llamada `use`, que permite leer recursos
 
 Por ejemplo, puedes usar `use` para leer una promesa, y React suspenderá el renderizado hasta que la promesa se resuelva:
 
-```
+```jsx
 import { use } from 'react';
 
 function Comentarios({ promesaComentarios }) {
@@ -264,7 +264,7 @@ function Pagina({ promesaComentarios }) {
 
 También puedes usar `use` para leer Context de forma condicional, incluso después de retornos tempranos:
 
-```
+```jsx
 import { use } from 'react';
 import ThemeContext from './ThemeContext';
 
@@ -300,7 +300,7 @@ Estas nuevas APIs mejoran `renderToString`, ya que esperan que los datos se carg
 
 #### Ejemplo con `prerender` en un entorno de Web Stream:
 
-```
+```jsx
 import { prerender } from 'react-dom/static';
 
 async function manejador(request) {
@@ -368,7 +368,7 @@ Las APIs `prerender` esperan que todos los datos se carguen antes de devolver el
     
     -   Puedes usar `<Context>` directamente como proveedor, eliminando la necesidad de `<Context.Provider>`. Ejemplo:
         
-```       
+```jsx       
         const ThemeContext = createContext('');
         <ThemeContext value="dark">...</ThemeContext>
 ```
@@ -380,7 +380,7 @@ Las APIs `prerender` esperan que todos los datos se carguen antes de devolver el
     
     Ejemplo:
     
-```
+```jsx
     
     <input
       ref={(ref) => {
@@ -411,7 +411,7 @@ Las APIs `prerender` esperan que todos los datos se carguen antes de devolver el
 
 React 19 introduce una mejora en el hook `useDeferredValue`, permitiendo un valor inicial mediante la opción `initialValue`:
 
-```
+```jsx
 
 function Search({ deferredValue }) {
   const value = useDeferredValue(deferredValue, ''); // Valor inicial como ''
@@ -426,7 +426,7 @@ Al usar `initialValue`, el valor devuelto en el primer render será el especific
 Ahora React soporta nativamente etiquetas como `<title>`, `<link>`, y `<meta>` directamente en los componentes. Estas etiquetas serán automáticamente movidas al `<head>` del documento.
 
 
-```
+```jsx
 
 function BlogPost({ post }) {
   return (
@@ -446,7 +446,7 @@ Esto elimina la necesidad de bibliotecas externas como `react-helmet` en casos s
 
 React 19 agrega manejo nativo de hojas de estilo con la opción de indicar la **precedencia**:
 
-```
+```jsx
 
 <Suspense fallback="loading...">
   <link rel="stylesheet" href="foo.css" precedence="default" />
@@ -465,7 +465,7 @@ React 19 agrega manejo nativo de hojas de estilo con la opción de indicar la **
 
 Los scripts asíncronos (`<script async>`) ahora son compatibles y se manejan automáticamente en React:
 
-```
+```jsx
 
 function MyComponent() {
   return <script async src="..."></script>;
@@ -483,7 +483,7 @@ function MyComponent() {
 
 React 19 incluye nuevas APIs para optimizar la carga de recursos:
 
-```
+```jsx
 import { prefetchDNS, preconnect, preload, preinit } from 'react-dom';
 
 function MyComponent() {
@@ -520,7 +520,7 @@ Esto resultaba en tres errores por cada error capturado:
 
 **Consola:**
 
-```
+```bash
 
 Error no capturado: hit
   en Throws
@@ -540,7 +540,7 @@ El error anterior ocurrió en el componente Throws:
 
 **Consola:**
 
-```
+```bash
 Error: hit
   en Throws
   en renderWithHooks
