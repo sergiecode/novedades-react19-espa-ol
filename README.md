@@ -360,6 +360,11 @@ Las APIs `prerender` esperan que todos los datos se carguen antes de devolver el
     
     -   Mejoras en los mensajes de error: incluyen un diff claro entre el contenido del servidor y el cliente.
     -   Documentación mejorada para solucionar problemas comunes como datos externos o diferencias de entorno.
+
+  ![Error de Consola](https://raw.githubusercontent.com/sergiecode/novedades-react19-espanol/refs/heads/main/consola2.png)
+
+  ![Error de Consola](https://raw.githubusercontent.com/sergiecode/novedades-react19-espanol/refs/heads/main/consola3.png)
+      
 3.  **`<Context>` como proveedor:**
     
     -   Puedes usar `<Context>` directamente como proveedor, eliminando la necesidad de `<Context.Provider>`. Ejemplo:
@@ -514,43 +519,11 @@ Mejoramos el manejo de errores en React 19 para eliminar duplicados y proporcion
 
 Esto resultaba en tres errores por cada error capturado:
 
-**Consola:**
-
-```bash
-
-Error no capturado: hit
-  en Throws
-  en renderWithHooks
-  …
-Error no capturado: hit    <-- Duplicado
-  en Throws
-  en renderWithHooks
-  …
-El error anterior ocurrió en el componente Throws:
-  en Throws
-  en ErrorBoundary
-  en App
-```
+![Error de Consola](https://raw.githubusercontent.com/sergiecode/novedades-react19-espanol/refs/heads/main/consola4.png)
 
 **React 19**: Ahora se registra un solo error con toda la información relevante:
 
-**Consola:**
-
-```bash
-Error: hit
-  en Throws
-  en renderWithHooks
-  …
-
-El error anterior ocurrió en el componente Throws:
-  en Throws
-  en ErrorBoundary
-  en App
-
-React intentará recrear este árbol de componentes desde cero usando el Error Boundary que proporcionaste, ErrorBoundary.
-  en ErrorBoundary
-  en App
-```
+![Error de Consola](https://raw.githubusercontent.com/sergiecode/novedades-react19-espanol/refs/heads/main/consola5.png)
 
 Además, se han agregado dos nuevas opciones a los "root" para complementar `onRecoverableError`:
 
