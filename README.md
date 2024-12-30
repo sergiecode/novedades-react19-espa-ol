@@ -251,11 +251,7 @@ function Pagina({ promesaComentarios }) {
 
 -   **`use` no admite promesas creadas durante el renderizado.** Si intentas usar una promesa creada en el renderizado con `use`, React mostrará una advertencia:
     
-    text
-    
-    Copy code
-    
-    `A component was suspended by an uncached promise. Creating promises inside a Client Component or hook is not yet supported, except via a Suspense-compatible library or framework.` 
+    ![Error de Consola](https://raw.githubusercontent.com/sergiecode/novedades-react19-espanol/refs/heads/main/consola1.png)
     
     Para solucionarlo, debes usar una promesa de una biblioteca o framework compatible con Suspense que admita el almacenamiento en caché de promesas. En el futuro, React planea facilitar el almacenamiento en caché de promesas en el renderizado.
     
