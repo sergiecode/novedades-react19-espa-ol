@@ -2,22 +2,6 @@
 
 **Extraído del blog publicado el 5 de diciembre de 2024 por el equipo de React**
 
-#### Nota
-
-¡React 19 ahora es estable!  
-Novedades desde la versión RC (Release Candidate) de abril:
-
--   **Precarga para árboles suspendidos**: consulta las mejoras en Suspense.
--   **APIs estáticas de React DOM**: consulta las nuevas APIs estáticas de React DOM.
-
-La fecha de esta publicación ha sido actualizada para reflejar el lanzamiento estable.
-
-¡React v19 ya está disponible en npm!
-
-En nuestra **Guía de Actualización a React 19**, compartimos instrucciones paso a paso para actualizar tu aplicación. En esta publicación, presentaremos las nuevas características de React 19 y cómo adoptarlas.
-
-----------
-
 ### Novedades en React 19
 
 #### Acciones (Actions)
