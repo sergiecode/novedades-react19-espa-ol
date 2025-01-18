@@ -516,10 +516,29 @@ function ComponenteDos() {
 
 Los scripts asíncronos (`<script async>`) ahora son compatibles y se manejan automáticamente en React:
 
+En React 19, se ha mejorado el soporte para los scripts asíncronos (async). Tradicionalmente, los scripts en HTML se cargan en un orden determinado, lo que puede dificultar su uso dentro de árboles de componentes profundos. Los scripts normales y diferidos siguen el orden del documento, pero los scripts asíncronos se cargan en orden arbitrario. Esto genera problemas cuando los componentes dependen de esos scripts y deben asegurarse de que se carguen antes de ejecutar el contenido. En React, si no se gestiona correctamente, esto puede llevar a la duplicación de scripts si se renderizan múltiples veces.
+
+Ahora, React 19 permite renderizar scripts asíncronos en cualquier parte del árbol de componentes sin preocuparse por el orden de carga. Además, React deduplicará estos scripts, asegurando que solo se cargue una vez incluso si se renderizan varias veces. En el caso del renderizado del lado del servidor (SSR), los scripts se incluirán en la etiqueta <head> y se priorizarán detrás de recursos críticos como hojas de estilo y fuentes, lo que mejora la eficiencia de la carga. Esto hace que la integración de scripts en React sea más flexible y eficiente.
+
 ```jsx
 
-function MyComponent() {
-  return <script async src="..."></script>;
+function MiComponente() {
+  return (
+    <div>
+      <script async={true} src="..." />
+      Hola Mundo
+    </div>
+  );
+}
+
+function Aplicación() {
+  <html>
+    <body>
+      <MiComponente />
+      ...
+      <MiComponente /> {/* No generará un script duplicado en el DOM */}
+    </body>
+  </html>
 }
 
 ```
