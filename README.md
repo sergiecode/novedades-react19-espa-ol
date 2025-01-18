@@ -471,6 +471,12 @@ Esto elimina la necesidad de bibliotecas externas como `react-helmet` en casos s
 
 React 19 agrega manejo nativo de hojas de estilo con la opción de indicar la **precedencia**:
 
+Las hojas de estilo, ya sean enlazadas externamente (<link rel="stylesheet" href="...">) o en línea (<style>...</style>), requieren una ubicación cuidadosa en el DOM debido a las reglas de precedencia de estilo. Esto significa que el navegador necesita saber cuál estilo tiene prioridad si se encuentran estilos conflictivos.
+
+El problema de la composición de hojas de estilo dentro de los componentes es complicado, porque en React, por lo general, los estilos de los componentes se cargan lejos de los propios componentes o bien se utilizan bibliotecas de estilos que encapsulan esta complejidad.
+
+Lo interesante de esta mejora es que ahora puedes indicarle a React la precedencia de tu hoja de estilo. Esto significa que React gestiona el orden de inserción de las hojas de estilo en el DOM, asegurándose de que la hoja de estilo (si es externa) se cargue antes de mostrar el contenido que depende de esas reglas de estilo.
+
 ```jsx
 
 function ComponenteUno() {
