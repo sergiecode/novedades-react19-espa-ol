@@ -487,11 +487,12 @@ React 19 incluye nuevas APIs para optimizar la carga de recursos:
 ```jsx
 import { prefetchDNS, preconnect, preload, preinit } from 'react-dom';
 
-function MyComponent() {
-  preinit('https://.../script.js', { as: 'script' });
-  preload('https://.../font.woff', { as: 'font' });
-  prefetchDNS('https://example.com');
-  preconnect('https://example.com');
+function MiComponente() {
+  preinit('https://.../ruta/a/algun/script.js', { as: 'script' }); // Carga y ejecuta este script de forma anticipada
+  preload('https://.../ruta/a/fuente.woff', { as: 'font' }); // Precarga esta fuente
+  preload('https://.../ruta/a/hoja-de-estilo.css', { as: 'style' }); // Precarga esta hoja de estilo
+  prefetchDNS('https://...'); // Para cuando es posible que no solicites nada de este host
+  preconnect('https://...'); // Para cuando sabes que harás una solicitud, pero no estás seguro de qué
 }
 ```
 
