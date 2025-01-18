@@ -125,6 +125,12 @@ function ChangeName({ name, setName }) {
 
 Para facilitar los casos comunes con **Actions**, se introduce el nuevo hook `useActionState`:
 
+En el ejemplo que se muestra, useActionState se utiliza para gestionar la actualización de un nombre en un formulario. La función useActionState recibe como argumento una función (la "acción") que realiza el proceso principal (en este caso, la actualización del nombre), y retorna un arreglo con tres elementos:
+
+1. error: Contendrá cualquier error que ocurra durante la ejecución de la acción.
+2. submitAction: Es la función que se llama al enviar el formulario, ejecutando la acción principal.
+3. isPending: Un valor booleano que indica si la acción está pendiente de completarse.
+
 ```jsx
 const [error, submitAction, isPending] = useActionState(
   async (previousState, newName) => {
@@ -213,6 +219,13 @@ function CambiarNombre({ nombreActual, onActualizarNombre }) {
 }
 ```
 
+El término "optimista" en el contexto de las actualizaciones optimistas hace referencia a la idea de que, al realizar una acción (como actualizar datos en un servidor), se asume de manera anticipada que la operación tendrá éxito. En lugar de esperar a que el servidor confirme la acción (lo cual podría llevar algo de tiempo), el sistema actualiza la interfaz de usuario inmediatamente, mostrando al usuario los cambios como si ya se hubieran completado con éxito. Es "optimista" porque el sistema actúa como si todo fuera a salir bien, sin esperar la confirmación real.
+
+Este enfoque tiene varias ventajas:
+1. Mejora la experiencia del usuario
+2. Reducción de la percepción de lentitud
+3. Manejo de errores posterior (revierte cambio)
+
 El hook `useOptimistic` renderizará de inmediato el valor de `nombreOptimista` mientras la solicitud `updateName` está en progreso. Cuando la solicitud termine o falle, React cambiará automáticamente al valor actual (`nombreActual`).
 
 **Más información:** consulta la documentación sobre `useOptimistic`.
@@ -226,6 +239,10 @@ En React 19, se introduce una nueva API llamada `use`, que permite leer recursos
 #### Leer una promesa con `use`
 
 Por ejemplo, puedes usar `use` para leer una promesa, y React suspenderá el renderizado hasta que la promesa se resuelva:
+
+El nuevo hook use en React 19 mejora la gestión de recursos asíncronos y contextos dentro de los componentes al permitir que estos sean leídos directamente durante el proceso de renderizado. Esto simplifica el manejo de datos que provienen de promesas, ya que React automáticamente suspende el renderizado hasta que la promesa se resuelva, mostrando un estado de carga adecuado mientras tanto. 
+
+Además, use permite leer contextos de forma condicional, incluso después de retornos tempranos en los componentes, lo que no era posible con useContext. Esta flexibilidad reduce la necesidad de gestionar manualmente los estados de carga o errores, haciendo que el código sea más limpio y la experiencia de usuario más fluida, ya que se pueden consumir recursos de manera más eficiente y directa dentro del flujo de renderizado.
 
 ```jsx
 import { use } from 'react';
@@ -292,6 +309,10 @@ Se agregaron dos nuevas APIs en `react-dom/static` para la generación de sitios
 -   **`prerender`**
 -   **`prerenderToNodeStream`**
 
+Las nuevas APIs de React DOM estático, prerender y prerenderToNodeStream, mejoran la generación de HTML estático al esperar a que todos los datos se carguen antes de devolver el HTML estático. Estas APIs están diseñadas para entornos de streaming como Node.js Streams y Web Streams, lo que las hace ideales para aplicaciones que necesitan generar HTML estático de manera eficiente.
+
+Prerender permite renderizar un árbol de React a HTML estático de forma optimizada, asegurando que todos los datos estén disponibles antes de generar el HTML final. Esto mejora respecto a la antigua función renderToString, ya que evita el renderizado incompleto y garantiza que todo el contenido necesario esté cargado antes de que se devuelva la respuesta estática.
+
 Estas nuevas APIs mejoran `renderToString`, ya que esperan que los datos se carguen antes de generar HTML estático. Están diseñadas para entornos de streaming, como los Streams de Node.js y los Web Streams.
 
 #### Ejemplo con `prerender` en un entorno de Web Stream:
@@ -318,35 +339,26 @@ Las APIs `prerender` esperan que todos los datos se carguen antes de devolver el
 
 ### **React Server Components**
 
-1.  **Qué son:**
-    
-    -   Permiten renderizar componentes en un entorno separado del cliente, antes de empacarlos.
-    -   Pueden ejecutarse en el momento de la construcción (CI server) o en cada solicitud (web server).
-2.  **Características clave:**
-    
-    -   Estabilidad en React 19, aunque las APIs subyacentes pueden cambiar entre versiones menores.
-    -   Útil para bibliotecas y frameworks que implementan la arquitectura Full-stack React.
-3.  **Recomendaciones:**
-    
-    -   Fijar la versión de React al usar Server Components en frameworks o usar la versión Canary para evitar rupturas.
-    -   Documentación: [React Server Components](https://react.dev).
+Los Server Components en React son un tipo de componente que se renderiza en el servidor antes de ser enviado al cliente. A diferencia de los componentes tradicionales, que se ejecutan en el navegador, los Server Components permiten que el HTML se genere de antemano, en el servidor, lo que puede mejorar el rendimiento y la experiencia del usuario.
+
+Estos componentes pueden ejecutarse en dos formas: sin servidor, cuando se procesan en tiempo de construcción (build time) en el servidor de integración continua (CI) o en una instancia de servidor; o con servidor, donde se generan dinámicamente en cada solicitud (request) al servidor, lo que permite acceder a la base de datos o datos específicos de la solicitud.
+
+Una de las ventajas principales es que los Server Components permiten reducir el tamaño del bundle que el navegador necesita cargar, ya que solo se envía el HTML ya procesado y no el código de los componentes. Además, pueden acceder a datos como archivos estáticos o consultas a bases de datos directamente en el servidor, eliminando la necesidad de hacer peticiones adicionales desde el cliente, lo que mejora la eficiencia.
+
+Aunque estos componentes no pueden ser interactivos por sí mismos (ya que no se envían al cliente), se pueden combinar con Client Components para agregar interactividad, lo que ofrece lo mejor de ambos mundos: la rapidez del renderizado del servidor con la flexibilidad de la interactividad en el cliente.
+
 
 ----------
 
 ### **Server Actions**
 
-1.  **Qué son:**
-    
-    -   Funciones asíncronas ejecutadas en el servidor, accesibles desde componentes cliente.
-2.  **Uso:**
-    
-    -   Declaradas con la directiva `"use server"`.
-    -   Se referencian automáticamente y se envían al cliente para su ejecución.
-3.  **Nota importante:**
-    
-    -   No se necesita directiva para Server Components.
-    -   La directiva `"use server"` es exclusiva para Server Actions.
-4.  **Más información:** [Server Actions](https://react.dev).
+Las Server Actions permiten que los componentes del cliente llamen a funciones asincrónicas que se ejecutan en el servidor. Para definir una Server Action, se utiliza la directiva "use server". 
+
+Al hacerlo, el marco de trabajo crea automáticamente una referencia a la función del servidor y la pasa al componente del cliente. Cuando el cliente llama a esta función, React envía una solicitud al servidor para ejecutarla y devuelve el resultado.
+
+Las Server Actions pueden ser creadas en los componentes del servidor y luego pasadas como propiedades a los componentes del cliente, o pueden ser importadas y usadas directamente en los componentes del cliente.
+
+El propósito de las Server Actions es permitir que los componentes del cliente interactúen con el servidor de manera eficiente, sin necesidad de escribir código explícito para manejar estas interacciones. También son útiles al trabajar con formularios o al manejar el estado de las acciones pendientes.
     
 
 ----------
@@ -435,6 +447,10 @@ function Aplicacion({children}) {
 #### `useDeferredValue` con valor inicial
 
 React 19 introduce una mejora en el hook `useDeferredValue`, permitiendo un valor inicial mediante la opción `initialValue`:
+
+useDeferredValue es un hook en React que permite posponer la actualización de una parte de la interfaz de usuario (UI) para mejorar el rendimiento, especialmente cuando hay tareas que requieren más tiempo, como mostrar contenido mientras se carga algo nuevo.
+
+Mejora en el hook useDeferredValue, permitiendo un valor inicial mediante la opción initialValue el cual tomará el valor devuelto en el primer render será el especificado, y luego se actualizará en segundo plano con deferredValue. 
 
 ```jsx
 
