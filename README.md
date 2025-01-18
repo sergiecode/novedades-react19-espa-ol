@@ -473,10 +473,30 @@ React 19 agrega manejo nativo de hojas de estilo con la opción de indicar la **
 
 ```jsx
 
-<Suspense fallback="loading...">
-  <link rel="stylesheet" href="foo.css" precedence="default" />
-  <link rel="stylesheet" href="bar.css" precedence="high" />
-</Suspense>
+function ComponenteUno() {
+  return (
+    <Suspense fallback="cargando...">
+      <link rel="stylesheet" href="estilos-base.css" precedence="default" />
+      <link rel="stylesheet" href="tema-principal.css" precedence="high" />
+      <article class="clase-base clase-destacada">
+        {...}
+      </article>
+    </Suspense>
+  );
+}
+
+function ComponenteDos() {
+  return (
+    <div>
+      <p>{...}</p>
+      <link 
+        rel="stylesheet" 
+        href="estilos-secundarios.css" 
+        precedence="default" 
+      />  {/* <-- será insertado entre estilos-base y tema-principal */}
+    </div>
+  );
+}
 
 ```
 
