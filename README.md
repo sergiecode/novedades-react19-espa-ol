@@ -382,8 +382,15 @@ function MiInput({ placeholder, ref }) {
     -   Puedes usar `<Context>` directamente como proveedor, eliminando la necesidad de `<Context.Provider>`. Ejemplo:
         
 ```jsx       
-        const ThemeContext = createContext('');
-        <ThemeContext value="dark">...</ThemeContext>
+const ThemeContext = createContext(''); // Crear el contexto con un valor predeterminado vacío
+
+function Aplicacion({children}) {
+  return (
+    <ThemeContext value="dark">
+      {children} {/* Renderizar los hijos directamente dentro del contexto */}
+    </ThemeContext>
+  );  
+}
 ```
         
 4.  **Funciones de limpieza en `ref`:**
