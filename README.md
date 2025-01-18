@@ -401,13 +401,18 @@ function Aplicacion({children}) {
     Ejemplo:
     
 ```jsx
-    
-    <input
-      ref={(ref) => {
-        console.log('ref creado:', ref);
-        return () => console.log('ref desmontado:', ref);
-      }}
-    />
+
+<input
+  ref={(ref) => {
+    // ref creada
+
+    // NUEVO: devuelve una función de limpieza (cleanup)
+    // para resetear la ref cuando el elemento sea eliminado del DOM.
+    return () => {
+      // limpieza de la ref
+    };
+  }}
+/>
 
    ```
     
