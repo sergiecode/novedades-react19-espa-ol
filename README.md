@@ -356,6 +356,18 @@ Las APIs `prerender` esperan que todos los datos se carguen antes de devolver el
 1.  **`ref` como prop:**
     
     -   Ahora puedes pasar `ref` directamente como una prop en componentes funcionales, sin necesidad de usar `forwardRef`.
+
+```jsx       
+// Definición del componente funcional con ref como prop
+function MiInput({ placeholder, ref }) {
+  return <input placeholder={placeholder} ref={ref} />;
+}
+
+//...
+// Uso del componente pasando una ref como prop
+<MiInput ref={ref} />;
+``` 
+
 2.  **Errores de hidratación con diffs:**
     
     -   Mejoras en los mensajes de error: incluyen un diff claro entre el contenido del servidor y el cliente.
