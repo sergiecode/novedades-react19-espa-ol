@@ -1,11 +1,11 @@
 # React v19
 
+Link a mi video en YouTube: https://youtu.be/VFgvh2R8iio
+
 **Extraído del blog publicado el 5 de diciembre de 2024 por el equipo de React**
 https://react.dev/blog/2024/12/05/react-19
 
 ### Novedades en React 19
-
-Link a mi video de Novedades en YouTube https://youtu.be/VFgvh2R8iio
 
 #### Acciones (Actions)
 
