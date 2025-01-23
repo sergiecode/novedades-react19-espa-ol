@@ -5,6 +5,8 @@ https://react.dev/blog/2024/12/05/react-19
 
 ### Novedades en React 19
 
+Link a mi video de Novedades en YouTube https://youtu.be/VFgvh2R8iio
+
 #### Acciones (Actions)
 
 Un caso común en aplicaciones React es realizar una mutación de datos y luego actualizar el estado en respuesta. Por ejemplo, cuando un usuario envía un formulario para cambiar su nombre, realizas una solicitud a una API y luego manejas la respuesta. Antes, tenías que manejar estados pendientes, errores, actualizaciones optimistas y solicitudes secuenciales manualmente.
